@@ -25,4 +25,14 @@ window.addEventListener('DOMContentLoaded', function (){
     squares.forEach((square, index) => {
         square.addEventListener('click', () => playerPlay(square, index));
     });
+
+    squares.forEach(function(square){
+        square.addEventListener("mouseover", function(e){
+            e.target.classList.add("hover");
+        });
+
+        square.addEventListener("mouseout", function(e){
+            e.target.classList.remove("hover");
+        });
+    });
 });
