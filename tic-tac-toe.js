@@ -1,7 +1,28 @@
-document.addEventListener("DOMContentLoaded", function() {
-    let squares= document.getElementById("board").querySelectorAll("div");
-    console.log(squares);
-    squares.forEach(function(elem){
-        elem.classList.add("square");
+window.addEventListener('DOMContentLoaded', function (){
+    let squares = Array.from(document.getElementById("board").querySelectorAll("div"));
+    squares.forEach(function(square){
+        square.classList.add("square");
     })
-}) 
+
+    let board = ['', '', '', '', '', '', '', '', ''];
+    let currentPlayer = 'X';
+    
+    function updateBoard (index) {
+        board[index] = currentPlayer;
+    }
+
+    function changePlayer (){
+        currentPlayer = currentPlayer == 'X' ? 'O' : 'X';
+    }
+
+    function playerPlay (square, index){
+        square.innerText = currentPlayer;
+        square.classList.add(currentPlayer);
+        updateBoard(index);
+        changePlayer();
+    }
+    
+    squares.forEach((square, index) => {
+        square.addEventListener('click', () => playerPlay(square, index));
+    });
+});
