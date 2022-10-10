@@ -7,6 +7,22 @@ window.addEventListener('DOMContentLoaded', function (){
     let isGameFinished = false;
     let board = ['', '', '', '', '', '', '', '', ''];
     let currentPlayer = 'X';
+
+    let winningCombinations = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+
+    let playerXwin = "playerXwin";
+    let playerOwin = "playerOwin";
+    let declareWinner = document.getElementById('status');
+    //console.log(declareWinner);
     
     function updateBoard (index) {
         board[index] = currentPlayer;
@@ -14,6 +30,7 @@ window.addEventListener('DOMContentLoaded', function (){
 
     function changePlayer (){
         currentPlayer = currentPlayer == 'X' ? 'O' : 'X';
+
     }
 
     function squareEmpty(square){
@@ -21,6 +38,43 @@ window.addEventListener('DOMContentLoaded', function (){
             return false;
         }else{
             return true;
+        }
+    }
+
+    const announceWinner = (result) => {
+        switch(result){
+            case playerXwin:
+                declareWinner.innerHTML ="Congratulations! X is the Winner!";
+                declareWinner.classList.add("you-won");
+                break;
+            case playerOwin:
+                declareWinner.innerHTML ="Congratulations! O is the Winner!";
+                declareWinner.classList.add("you-won");
+                break;
+        }
+    };
+
+    function checkWinner() {
+        let roundWon = false;
+        for (let i = 0; i <= 7; i++) {
+            const winCondition = winningCombinations[i];
+            const a = board[winCondition[0]];
+            const b = board[winCondition[1]];
+            const c = board[winCondition[2]];
+            
+            if (a === '' || b === '' || c === '') {
+                continue;
+            }
+            if (a === b && b === c) {
+                roundWon = true;
+                break;
+            }
+        }
+
+    if (roundWon) {
+            announceWinner(currentPlayer == 'X' ? playerXwin : playerOwin);
+            isGameFinished = true;
+            return;
         }
     }
 
@@ -48,60 +102,6 @@ window.addEventListener('DOMContentLoaded', function (){
             e.target.classList.remove("hover");
         });
     });
-
-    let winningCombinations = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6]
-    ];
-
-    let playerXwin = "playerXwin";
-    let playerOwin = "playerOwin";
-    let declareWinner = document.getElementById('status');
-    //console.log(declareWinner);
-
-    function checkWinner() {
-        let roundWon = false;
-        for (let i = 0; i <= 7; i++) {
-            const winCondition = winningCombinations[i];
-            const a = board[winCondition[0]];
-            const b = board[winCondition[1]];
-            const c = board[winCondition[2]];
-            
-            if (a === '' || b === '' || c === '') {
-                continue;
-            }
-            if (a === b && b === c) {
-                roundWon = true;
-                break;
-            }
-        }
-
-    if (roundWon) {
-            announceWinner(currentPlayer == 'X' ? playerXwin : playerOwin);
-            isGameFinished = true;
-            return;
-        }
-    }
-
-
-    const announceWinner = (result) => {
-        switch(result){
-            case playerXwin:
-                declareWinner.innerHTML ="Congratulations! X is the Winner!";
-                declareWinner.classList.add("you-won");
-                break;
-            case playerOwin:
-                declareWinner.innerHTML ="Congratulations! O is the Winner!";
-                declareWinner.classList.add("you-won");
-                break;
-        }
-    };
 
     const newGameBtn = document.querySelector("button");
     //console.log(newGameBtn);
