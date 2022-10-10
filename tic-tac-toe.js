@@ -54,10 +54,7 @@ window.addEventListener('DOMContentLoaded', function (){
         }
     };
 
-<<<<<<< HEAD
-=======
     //Adapted from JavaScript Academy sourced here: https://www.youtube.com/watch?v=B3pmT7Cpi24&t=577s
->>>>>>> main
     function checkWinner() {
         let roundWon = false;
         for (let i = 0; i <= 7; i++) {
