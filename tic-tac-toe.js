@@ -3,7 +3,8 @@ window.addEventListener('DOMContentLoaded', function (){
     squares.forEach(function(square){
         square.classList.add("square");
     })
-
+    
+    let isGameFinished = false;
     let board = ['', '', '', '', '', '', '', '', ''];
     let currentPlayer = 'X';
     
@@ -15,12 +16,23 @@ window.addEventListener('DOMContentLoaded', function (){
         currentPlayer = currentPlayer == 'X' ? 'O' : 'X';
     }
 
+    function squareEmpty(square){
+        if(square.innerText === "X" || square.innerText ==="O"){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     function playerPlay (square, index){
-        square.innerText = currentPlayer;
-        square.classList.add(currentPlayer);
-        updateBoard(index);
-        checkWinner();
-        changePlayer();
+        if(squareEmpty(square) && isGameFinished != true){
+            square.innerText = currentPlayer;
+            square.classList.add(currentPlayer);
+            updateBoard(index);
+            checkWinner();
+            changePlayer();
+            square.classList.remove(currentPlayer);
+        } 
     }
     
     squares.forEach((square, index) => {
@@ -72,6 +84,7 @@ window.addEventListener('DOMContentLoaded', function (){
 
     if (roundWon) {
             announceWinner(currentPlayer == 'X' ? playerXwin : playerOwin);
+            isGameFinished = true;
             return;
         }
     }
@@ -91,11 +104,13 @@ window.addEventListener('DOMContentLoaded', function (){
     };
 
     const newGameBtn = document.querySelector("button");
-    console.log(newGameBtn);
+    //console.log(newGameBtn);
 
     newGameBtn.addEventListener("click", e => {
         e.preventDefault();
         board = ['', '', '', '', '', '', '', '', ''];
+        currentPlayer = 'X';
+        isGameFinished = false;
         squares.forEach(function(square){
             square.innerText = '';
             square.classList.remove('square.X');
@@ -104,6 +119,4 @@ window.addEventListener('DOMContentLoaded', function (){
         declareWinner.classList.remove("you-won");
         declareWinner.innerHTML = "Move your mouse over a square and click to play an X or an O";
     });
-
-    
 });
