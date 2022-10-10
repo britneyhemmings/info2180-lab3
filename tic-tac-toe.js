@@ -88,6 +88,22 @@ window.addEventListener('DOMContentLoaded', function (){
                 declareWinner.classList.add("you-won");
                 break;
         }
-        }  ;
+    };
+
+    const newGameBtn = document.querySelector("button");
+    console.log(newGameBtn);
+
+    newGameBtn.addEventListener("click", e => {
+        e.preventDefault();
+        board = ['', '', '', '', '', '', '', '', ''];
+        squares.forEach(function(square){
+            square.innerText = '';
+            square.classList.remove('square.X');
+            square.classList.remove('square.O');
+        });
+        declareWinner.classList.remove("you-won");
+        declareWinner.innerHTML = "Move your mouse over a square and click to play an X or an O";
+    });
+
     
 });
